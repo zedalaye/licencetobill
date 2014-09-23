@@ -4,9 +4,11 @@ module LicenceToBill
       if params.kind_of?(Array)
         params.map { |hash| klass.new(hash) }
       else
-        return [] if params.parsed_response['Status'] === 404
-        params = JSON.parse(params.body)
-        [klass.new(params)]
+        status = params.parsed_response['Status']
+        return [] if status === 404
+        hash = JSON.parse(params.body)
+        return [ LicenceToBill::Error.new(hash) ] if status
+        [klass.new(hash)]
       end
     end
   end
