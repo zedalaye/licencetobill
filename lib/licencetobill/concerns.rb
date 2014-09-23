@@ -2,6 +2,8 @@ module LicenceToBill
   module Concerns
 
     include LicenceToBill::Helpers
+
+    attr_reader :data_source
     
     def initialize(data_source)
       @data_source = data_source
