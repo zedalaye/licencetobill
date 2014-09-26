@@ -1,6 +1,7 @@
 module LicenceToBill
   class Manager
     def self.return_collection(klass, params)
+      return [] if params.nil?
       if params.kind_of?(Array)
         params.map { |hash| klass.new(hash) }
       else
