@@ -7,7 +7,9 @@ module LicenceToBill
     include LicenceToBill::Helpers
     attr_accessor :token, :base_uri
 
-    def initialize(business_key = LicenceToBill.configuration.business_key, agent_key = LicenceToBill.configuration.agent_key)
+    def initialize(business_key = LicenceToBill.configuration.business_key, agent_key = LicenceToBill.configuration.agent_key,
+                   logging = LicenceToBill.configuration.logging)
+      @logging      = logging
       @business_key = business_key
       @agent_key    = agent_key
       @token        = set_token
@@ -75,10 +77,11 @@ module LicenceToBill
       end
 
       def call_to(endpoint, method = :get, params = {})
-        HTTParty.send(method, 
+        HTTParty.send(method,
                       "#{@base_uri}#{endpoint}", 
                       headers: { "Authorization" => @token, 'Content-Type' => "application/json" },
-                      body: params.to_json)
+                      body: params.to_json,
+                      logger: @logging[:logger], log_level: @logging[:log_level], log_format: @logging[:log_format])
       end
   end
 
