@@ -31,12 +31,17 @@ module LicenceToBill
       get_collection(LicenceToBill::User, call_to("/users/features/#{key_feature}"))
     end
 
+    def register_user(key_user, name_user)
+      call_to("/users/#{key_user}", :post, { key_user: "#{key_user}", name_user: "#{name_user}" })
+    end
+
+    # BILLING ADDRESSES
     def get_billing_address_for(key_user)
       get_collection(LicenceToBill::UserAddress, call_to("/address/users/#{key_user}"))
     end
 
-    def register_user(key_user, name_user)
-      call_to("/users/#{key_user}", :post, { key_user: "#{key_user}", name_user: "#{name_user}" })
+    def set_billing_address_for(key_user, address_hash)
+      call_to("/address/users/#{key_user}", :post, address_hash)
     end
 
     # FEATURES
