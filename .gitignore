@@ -14,5 +14,8 @@ config/secrets.yml
 /vendor/bundle
 .DS_Store
 
+# RubyMine IDE
+.idea
+
 # these should all be checked in to normalise the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
