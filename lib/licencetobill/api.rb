@@ -8,8 +8,10 @@ module LicenceToBill
     attr_accessor :token, :base_uri
 
     def initialize(business_key = LicenceToBill.configuration.business_key, agent_key = LicenceToBill.configuration.agent_key,
-                   logging = LicenceToBill.configuration.logging)
+                   timeout = LicenceToBill.configuration.timeout, logging = LicenceToBill.configuration.logging)
+      @timeout      = timeout
       @logging      = logging
+
       @business_key = business_key
       @agent_key    = agent_key
       @token        = set_token
@@ -82,11 +84,30 @@ module LicenceToBill
       end
 
       def call_to(endpoint, method = :get, params = {})
+        ret = nil
+        retries = 2
+        timeout = @timeout
+        while retries > 0 do
+          begin
+            ret = unsafe_call_to(endpoint, method, timeout, params)
+            break
+          rescue Net::OpenTimeout, Net::ReadTimeout
+            ret = nil
+            timeout += 1 # 1 more second at each retry
+            retries -= 1
+          end
+        end
+        ret
+      end
+
+    private
+      def unsafe_call_to(endpoint, method, timeout, params)
         HTTParty.send(method,
-                      "#{@base_uri}#{endpoint}", 
+                      "#{@base_uri}#{endpoint}",
                       headers: { "Authorization" => @token, 'Content-Type' => "application/json" },
                       body: params.to_json,
-                      logger: @logging[:logger], log_level: @logging[:log_level], log_format: @logging[:log_format])
+                      logger: @logging[:logger], log_level: @logging[:log_level], log_format: @logging[:log_format],
+                      timeout: timeout)
       end
   end
 
