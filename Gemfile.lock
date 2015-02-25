@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    licencetobill (0.1.1)
+    licencetobill (0.1.2)
       addressable
       httparty
 
