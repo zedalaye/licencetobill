@@ -4,6 +4,7 @@ module LicenceToBill
   end
 end
 
+require 'time'
 require 'json'
 require 'httparty'
 

@@ -77,6 +77,13 @@ module LicenceToBill
       call_to("/trial/#{key_user}", :post)
     end
 
+    def set_renewal_date(key_deal, date_renewal)
+      date_renewal = DateTime.parse(date_renewal) if date_renewal.is_a?(String)
+      raise ArgumentError.new('Invalid Date, Time, DateTime or String') unless date_renewal.respond_to?(:iso8601)
+
+      call_to("/deals/#{key_deal}/DateRenewal", :put, { :date_renewal => date_renewal.to_date.iso8601})
+    end
+
     protected
       def set_token
         token = Base64.encode64("#{@business_key}:#{@agent_key}").delete!("\n")
