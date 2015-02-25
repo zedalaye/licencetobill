@@ -102,6 +102,9 @@ get_deals_for(key_user)
 
 add_trial_for(key_user)
 #=> Create a trial offer for a specific user
+
+set_renewal_date(key_deal, date_renewal)
+#=> Change the renewal date for a specific deal
 ```
 
 #### STAGES
