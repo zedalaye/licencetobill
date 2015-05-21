@@ -105,6 +105,9 @@ add_trial_for(key_user)
 
 set_renewal_date(key_deal, date_renewal)
 #=> Change the renewal date for a specific deal
+
+get_stages
+#=> Get all the stages for a specific deal (of course you'll need to send this message to an offer deal = @deal.get_stages)
 ```
 
 #### STAGES
