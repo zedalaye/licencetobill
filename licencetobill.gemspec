@@ -1,8 +1,8 @@
 #encoding: utf-8
 Gem::Specification.new do |s|
   s.name        = 'licencetobill'
-  s.version     = '0.1.2'
-  s.date        = '2015-02-25'
+  s.version     = '0.1.3'
+  s.date        = '2016-08-02'
   s.summary     = "A simple ruby wrapper for the LicenceToBill API"
   s.authors     = [ "Guillaume Troppée", "Pierre Yager" ]
   s.email       = 'gtroppee@gmail.com'
