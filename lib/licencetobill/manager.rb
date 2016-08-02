@@ -2,7 +2,7 @@ module LicenceToBill
   class Manager
     def self.return_collection(klass, params)
       return [] if params.nil?
-      if params.kind_of?(Array)
+      if params.parsed_response.kind_of?(Array)
         params.map { |hash| klass.new(hash) }
       else
         status = params.parsed_response['Status']
